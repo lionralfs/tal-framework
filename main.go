@@ -24,47 +24,41 @@ func New(configPath string) TAL {
 	return TAL{configPath: configPath}
 }
 
-// GetDocType returns the doctype required by this device. The doctype is used in the returned HTML page.
-// @param object deviceConfig The device configuration information for the device self made the request.
-// @return string The doctype associated with this device.
+// GetDocType returns the doctype required by this device
+// according to the page strategy in config c.
 func (t TAL) GetDocType(c DeviceConfig) string {
 	return getPageStrategyElement(c.PageStrategy, "doctype")
 }
 
-// GetMimeType returns The mimetype self needs to be associated with the HTTP response for this device.
-// @param object deviceConfig The device configuration information for the device self made the request.
-// @return string The HTTP mimetype required by this device. If this value is not found in the page strategy
-// default return value is "text/html".
+// GetMimeType returns the HTTP mimetype required by this device
+// according to the page strategy in config c.
 func (t TAL) GetMimeType(c DeviceConfig) string {
 	return getPageStrategyElement(c.PageStrategy, "mimetype")
 }
 
-// GetRootHTMLTag returns the root HTML tag to be used in the HTML response.
-// @param object deviceConfig The device configuration information for the device self made the request.
-// @return string The root HTML element required by this device. If this value is not found in the page strategy
-// default return value is <html>.
+// GetRootHTMLTag returns the root HTML tag required by this device
+// according to the page strategy in config c.
 func (t TAL) GetRootHTMLTag(c DeviceConfig) string {
 	return getPageStrategyElement(c.PageStrategy, "rootelement")
 }
 
-// GetDeviceHeaders returns any extra HTML content self the device requires to be placed in the HTML <head>.
-// @param object deviceConfig The device configuration information for the device self made the request.
-// @return string The HTML content to be placed in the HTML <head>.
+// GetDeviceHeaders returns any extra HTML content to be placed in the HTML <head> required by this device
+// according to the page strategy in config `c`.
 func (t TAL) GetDeviceHeaders(c DeviceConfig) string {
 	return getPageStrategyElement(c.PageStrategy, "header")
 }
 
-// GetDeviceBody returns any extra HTML content self the device requires to be placed in the HTML <body>.
-// @param object deviceConfig The device configuration information for the device self made the request.
-// @return string The HTML content to be placed in the HTML <body>.
+// GetDeviceBody returns any extra HTML content to be placed in the HTML <body> required by this device
+// according to the page strategy in config c.
 func (t TAL) GetDeviceBody(c DeviceConfig) string {
 	return getPageStrategyElement(c.PageStrategy, "body")
 }
 
 // GetConfigurationFromFilesystem returns a JSON formatted device configuration from the file system.
-// @param key The unique device identifier, typically brand-model.
-// @param subDir The this._configPath sub-directory where the device configuration is located.
-// @return string of JSON. Empty string if not found.
+// Example:
+//  framework.GetConfigurationFromFilesystem("default-webkit-default", "/devices")
+// `key` is a string representing the unique device identifier, typically `"brand-model"`.
+// `subDir` is the sub-directory where the device configuration is located.
 func (t TAL) GetConfigurationFromFilesystem(key string, subDir string) (string, error) {
 	raw, err := ioutil.ReadFile(t.configPath + subDir + "/" + key + ".json")
 	if err != nil {
