@@ -43,7 +43,7 @@ func (t TAL) GetRootHTMLTag(c DeviceConfig) string {
 }
 
 // GetDeviceHeaders returns any extra HTML content to be placed in the HTML <head> required by this device
-// according to the page strategy in config `c`.
+// according to the page strategy in config c.
 func (t TAL) GetDeviceHeaders(c DeviceConfig) string {
 	return getPageStrategyElement(c.PageStrategy, "header")
 }
@@ -55,10 +55,13 @@ func (t TAL) GetDeviceBody(c DeviceConfig) string {
 }
 
 // GetConfigurationFromFilesystem returns a JSON formatted device configuration from the file system.
+//
 // Example:
 //  framework.GetConfigurationFromFilesystem("default-webkit-default", "/devices")
-// `key` is a string representing the unique device identifier, typically `"brand-model"`.
-// `subDir` is the sub-directory where the device configuration is located.
+//
+// 'key' is a string representing the unique device identifier, typically "brand-model".
+//
+// 'subDir' is the sub-directory where the device configuration is located.
 func (t TAL) GetConfigurationFromFilesystem(key string, subDir string) (string, error) {
 	raw, err := ioutil.ReadFile(t.configPath + subDir + "/" + key + ".json")
 	if err != nil {
