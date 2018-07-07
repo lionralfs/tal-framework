@@ -72,10 +72,7 @@ func (t TAL) GetConfigurationFromFilesystem(key string, subDir string) (string, 
 
 // NormaliseKeyNames replaces whitespace with underscores and lowercases all uppercase characters.
 // Used to compare strings where capitalization is not guaranteed.
-// @param string value The value to be normalized.
-// @return string The normalized value.
 func NormaliseKeyNames(value string) string {
-	// return value.replace(/[^a-zA-Z0-9]/gi, "_").toLowerCase();
 	re := regexp.MustCompile("[^a-zA-Z0-9]")
 	return strings.ToLower(re.ReplaceAllString(value, "_"))
 }
